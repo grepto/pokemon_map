@@ -76,14 +76,16 @@ def show_pokemon(request, pokemon_id):
             'title_ru': next_evolution.title,
             'img_url': get_pokemon_image_url(next_evolution, request),
         }})
-
-    previous_evolution = requested_pokemon.previous_evolution.all()
-    if previous_evolution:
-        pokemon.update({'previous_evolution': {
-            'pokemon_id': previous_evolution[0].id,
-            'title_ru': previous_evolution[0].title,
-            'img_url': get_pokemon_image_url(previous_evolution[0], request),
-        }})
+    try:
+        previous_evolution = requested_pokemon.previous_evolution
+        if previous_evolution:
+            pokemon.update({'previous_evolution': {
+                'pokemon_id': previous_evolution.id,
+                'title_ru': previous_evolution.title,
+                'img_url': get_pokemon_image_url(previous_evolution, request),
+            }})
+    except Pokemon.previous_evolution.RelatedObjectDoesNotExist:
+        pass
 
     pokemons_entity = PokemonEntity.objects.filter(pokemon=requested_pokemon)
     folium_map = get_pokemons_entity_map(pokemons_entity, request)
