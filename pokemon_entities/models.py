@@ -7,7 +7,7 @@ class Pokemon(models.Model):
     title_jp = models.CharField('японское название', null=True, blank=True, max_length=200)
     description = models.TextField('описание', null=True, blank=True, max_length=2000)
     image = models.ImageField(upload_to='pokemons', null=True, blank=True, verbose_name='изображение')
-    next_evolution = models.OneToOneField('self', on_delete=models.CASCADE, null=True, blank=True,
+    next_evolution = models.OneToOneField('self', on_delete=models.SET_NULL, null=True, blank=True,
                                           related_name='previous_evolution', verbose_name='в кого эволюционирует')
 
     def __str__(self):
