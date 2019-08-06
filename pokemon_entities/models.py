@@ -3,9 +3,9 @@ from django.db import models
 
 class Pokemon(models.Model):
     title = models.CharField('название', max_length=200)
-    title_en = models.CharField('английское название', null=True, blank=True, max_length=200)
-    title_jp = models.CharField('японское название', null=True, blank=True, max_length=200)
-    description = models.TextField('описание', null=True, blank=True, max_length=2000)
+    title_en = models.CharField('английское название',  blank=True, max_length=200)
+    title_jp = models.CharField('японское название',  blank=True, max_length=200)
+    description = models.TextField('описание',  blank=True, max_length=2000)
     image = models.ImageField(upload_to='pokemons', null=True, blank=True, verbose_name='изображение')
     next_evolution = models.OneToOneField('self', on_delete=models.SET_NULL, null=True, blank=True,
                                           related_name='previous_evolution', verbose_name='в кого эволюционирует')
